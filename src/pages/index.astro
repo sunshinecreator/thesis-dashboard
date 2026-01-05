@@ -1,0 +1,62 @@
+---
+// src/pages/index.astro
+import TaskCard from '../components/TaskCard.astro';
+import ProgressSummary from '../components/ProgressSummary.astro';
+
+const tasks = await import('../data/tasks.json').then(m => m.default);
+
+const todoTasks = tasks.filter(t => t.status === 'todo');
+const inProgressTasks = tasks.filter(t => t.status === 'in_progress');
+const doneTasks = tasks.filter(t => t.status === 'done');
+---
+
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>我的博士论文看板</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; padding: 2rem; background: #f9fafb; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 2rem; }
+    .columns { display: flex; gap: 1.5rem; margin-top: 2rem; }
+    .column { flex: 1; background: white; border-radius: 8px; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .column h2 { margin-top: 0; font-size: 1.1rem; color: #4b5563; }
+    .about { margin-top: 3rem; padding: 1.5rem; background: #f0fdf4; border-left: 4px solid #10b981; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎓 博士论文写作看板</h1>
+      <p>实时追踪进度 · 版本受控于 GitHub</p>
+    </div>
+
+    <ProgressSummary 
+      total={tasks.length} 
+      completed={doneTasks.length} 
+    />
+
+    <div class="columns">
+      <div class="column">
+        <h2>🟡 待办 (To Do)</h2>
+        {todoTasks.map(task => <TaskCard task={task} />)}
+      </div>
+      <div class="column">
+        <h2>🔵 进行中 (In Progress)</h2>
+        {inProgressTasks.map(task => <TaskCard task={task} />)}
+      </div>
+      <div class="column">
+        <h2>🟢 已完成 (Done)</h2>
+        {doneTasks.map(task => <TaskCard task={task} />)}
+      </div>
+    </div>
+
+    <div class="about">
+      <h3>关于这个看板</h3>
+      <p>这是我在攻读博士学位期间用于管理论文写作的个人仪表盘。所有任务数据存储在 <code>tasks.json</code> 中，通过 Git 进行版本控制，并自动部署到自定义域名。它体现了我对项目管理、自动化和透明工作的重视。</p>
+      <p>源码：<a href="https://github.com/yourname/thesis-dashboard" target="_blank">github.com/yourname/thesis-dashboard</a></p>
+    </div>
+  </div>
+</body>
+</html>
