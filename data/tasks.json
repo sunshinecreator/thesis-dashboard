@@ -1,0 +1,24 @@
+[
+  {
+    "id": "ch1-outline",
+    "title": "第1章 绪论 - 大纲",
+    "chapter": "Chapter 1",
+    "type": "outline",
+    "status": "done",
+    "due": "2025-10-01",
+    "completedAt": "2025-09-28",
+    "wordCount": 800,
+    "targetWords": 800,
+    "notes": "导师认可结构"
+  },
+  {
+    "id": "ch3-draft",
+    "title": "第3章 方法 - 初稿",
+    "chapter": "Chapter 3",
+    "type": "draft",
+    "status": "in_progress",
+    "due": "2026-02-28",
+    "wordCount": 1200,
+    "targetWords": 3000
+  }
+]
