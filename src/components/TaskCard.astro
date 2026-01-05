@@ -1,0 +1,23 @@
+---
+// src/components/TaskCard.astro
+const { task } = Astro.props;
+
+const progress = task.targetWords > 0 
+  ? Math.min(100, Math.round((task.wordCount / task.targetWords) * 100))
+  : (task.status === 'done' ? 100 : 0);
+
+const dueDate = task.due ? new Date(task.due).toLocaleDateString('zh-CN') : '无';
+---
+
+<div style="margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 6px;">
+  <strong>{task.title}</strong><br/>
+  <small>章节：{task.chapter} | 截止：{dueDate}</small>
+  {task.targetWords > 0 && (
+    <div style="margin-top: 0.5rem; font-size: 0.9em;">
+      字数：{task.wordCount}/{task.targetWords} ({progress}%)
+      <div style="height: 6px; background: #e5e7eb; border-radius: 3px; margin-top: 4px; overflow: hidden;">
+        <div style={`width: ${progress}%; height: 100%; background: ${progress >= 100 ? '#10b981' : '#3b82f6'};`}></div>
+      </div>
+    </div>
+  )}
+</div>
